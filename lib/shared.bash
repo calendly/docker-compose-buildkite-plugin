@@ -206,10 +206,10 @@ function run_docker_compose() {
   fi
 
   for file in $(docker_compose_config_files) ; do
-    command+=(-f "$file")
+    command+=(--file "$file")
   done
 
-  command+=(-p "$(docker_compose_project_name)")
+  command+=(--project-name "$(docker_compose_project_name)")
 
   plugin_prompt_and_run "${command[@]}" "$@"
 }
