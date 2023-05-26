@@ -191,11 +191,11 @@ while read -r arg ; do
 done <<< "$(plugin_read_list ARGS)"
 
 echo "+++ :docker: Building services ${services[*]}"
-run_docker_compose -f "$override_file" "${build_params[@]}" "${services[@]}"
+run_docker_compose --file "$override_file" "${build_params[@]}" "${services[@]}"
 
 if [[ -n "$image_repository" ]] ; then
   echo "~~~ :docker: Pushing built images to $image_repository"
-  retry "$push_retries" run_docker_compose -f "$override_file" push "${services[@]}"
+  retry "$push_retries" run_docker_compose --file "$override_file" push "${services[@]}"
 
   # iterate over build images
   while [[ ${#build_images[@]} -gt 0 ]] ; do

@@ -57,9 +57,9 @@ done
 if [[ ${#prebuilt_services[@]} -gt 0 ]] ; then
   echo "~~~ :docker: Creating docker-compose override file for prebuilt services"
   build_image_override_file "${prebuilt_service_overrides[@]}" | tee "$override_file"
-  run_params+=(-f "$override_file")
-  pull_params+=(-f "$override_file")
-  up_params+=(-f "$override_file")
+  run_params+=(--file "$override_file")
+  pull_params+=(--file "$override_file")
+  up_params+=(--file "$override_file")
 fi
 
 # If there are multiple services to pull, run it in parallel (although this is now the default)
