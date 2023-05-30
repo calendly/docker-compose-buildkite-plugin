@@ -190,26 +190,33 @@ function run_docker_compose() {
   local command=(docker-compose)
   if [[ "$(plugin_read_config CLI_VERSION "1")" == "2" ]] ; then
     command=(docker compose)
+    echo "Command: ${command}"
   fi
 
   if [[ "$(plugin_read_config VERBOSE "false")" == "true" ]] ; then
     command+=(--verbose)
+    echo "Command: ${command}"
   fi
 
   if [[ "$(plugin_read_config ANSI "true")" == "false" ]] ; then
     command+=(--no-ansi)
+    echo "Command: ${command}"
   fi
 
   # Enable compatibility mode for v3 files
   if [[ "$(plugin_read_config COMPATIBILITY "false")" == "true" ]]; then
     command+=(--compatibility)
+    echo "Command: ${command}"
   fi
 
   for file in $(docker_compose_config_files) ; do
     command+=(--file "$file")
+    echo "Command: ${command}"
   done
 
   command+=(--project-name "$(docker_compose_project_name)")
+
+  echo "final command: ${command}"
 
   plugin_prompt_and_run "${command[@]}" "$@"
 }
